@@ -1,6 +1,8 @@
 from tkinter import *
 import tkinter.ttk as ttk
 from tkinter import colorchooser
+from tkinter import filedialog
+from PIL import ImageGrab, Image, ImageDraw, ImageTk
 
 root = Tk()
 root.title("Paint")
@@ -9,21 +11,6 @@ root.iconbitmap("01 Nenebiker.ico")
 
 WIDTH = 600
 HEIGHT = 400
-
-# Create Canvas
-my_canvas = Canvas(root, width=WIDTH, height=HEIGHT, bg="white")
-my_canvas.pack(pady=20)
-
-# # Create a line
-# x1, y1, x2, y2 = 0, 100, 300, 100
-# my_canvas.create_line(x1, y1, x2, y2, fill="red")
-
-# # Create another line to cross the first
-# x1, y1, x2, y2 = 100, 0, 100, 300
-# my_canvas.create_line(x1, y1, x2, y2, fill="red")
-
-brush_color = "black"
-bg_color = "white"
 
 def paint(e):
     # Brush params
@@ -54,6 +41,30 @@ def change_canvas_color():
     global bg_color
     bg_color = colorchooser.askcolor(color=bg_color)[1]
     my_canvas.config(bg=bg_color)
+
+# Save image
+def save_as_png():
+    result = filedialog.asksaveasfilename(initialdir='c:', filetypes=(("png files", "*.png"), ("all files", "*.*")))
+    if result.endswith(".png"):
+        pass
+    else:
+        result += ".png"
+
+    if result:
+        x = root.winfo_rootx() + my_canvas.winfo_x()
+        y = root.winfo_rooty() + my_canvas.winfo_y()
+        x1 = x + my_canvas.winfo_width()
+        y1 = y + my_canvas.winfo_height()
+        ImageGrab.grab().crop((x, y, x1, y1)).save(result)
+
+
+
+# Create Canvas
+my_canvas = Canvas(root, width=WIDTH, height=HEIGHT, bg="white")
+my_canvas.pack(pady=20)
+
+brush_color = "black"
+bg_color = "white"
 
 # Bind the mouse to the Canvas
 my_canvas.bind("<B1-Motion>", paint)
@@ -105,5 +116,16 @@ brush_color_button.pack(pady=10, padx=10)
 canvas_color_button = Button(change_colors_frame, text="Canvas Color", command=change_canvas_color)
 canvas_color_button.pack(pady=10, padx=10)
 
+# Program options frame
+options_frame = LabelFrame(brush_options_frame, text="Program Options")
+options_frame.grid(row=0, column=3, padx=50)
+
+# Clear screen button
+clear_button = Button(options_frame, text="Clear Screen", command=lambda: my_canvas.delete(ALL))
+clear_button.pack(padx=10, pady=10)
+
+# Save image button
+save_image_button = Button(options_frame, text="Save to PNG",command=save_as_png)
+save_image_button.pack(padx=10, pady=10)
 
 root.mainloop()
