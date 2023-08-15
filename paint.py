@@ -44,7 +44,7 @@ def change_canvas_color():
 
 # Save image
 def save_as_png():
-    result = filedialog.asksaveasfilename(initialdir='c:', filetypes=(("png files", "*.png"), ("all files", "*.*")))
+    result = filedialog.asksaveasfilename(initialdir='', filetypes=(("png files", "*.png"), ("all files", "*.*")))
     if result.endswith(".png"):
         pass
     else:
