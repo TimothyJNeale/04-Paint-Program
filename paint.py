@@ -27,12 +27,12 @@ def paint(e):
     # Brush params
     #brush_width = 25
     brush_color = "green"
-    brush_type = BUTT
+    #brush_type = BUTT
     # BUTT, ROUND, PROJECTING
 
     # Create a red line following the mouse pointer
     my_canvas.create_line(e.x-1, e.y-1, e.x+1, e.y+1, 
-                          capstyle=brush_type, 
+                          capstyle=brush_type.get(),
                           fill=brush_color, 
                           width=int(brush_slider.get()), 
                           smooth=True)
@@ -64,6 +64,22 @@ brush_slider.pack(pady=10, padx=10)
 # Brush slider label
 brush_slider_label = Label(brush_size_frame, text=brush_slider.get())
 brush_slider_label.pack(pady=5)
+
+# Brush type
+brush_type_frame = LabelFrame(brush_options_frame, text="Brush Type", height=400)  # LabelFrame is a frame with a label
+brush_type_frame.grid(row=0, column=1, padx=50)
+
+brush_type = StringVar()
+brush_type.set("round")
+
+# Create radio buttons for brush type
+brush_type_radio1 = Radiobutton(brush_type_frame, text="Round", variable=brush_type, value="round")
+brush_type_radio2 = Radiobutton(brush_type_frame, text="Slash", variable=brush_type, value="butt")
+brush_type_radio3 = Radiobutton(brush_type_frame, text="Diamond", variable=brush_type, value="projecting")
+
+brush_type_radio1.pack(anchor=W)
+brush_type_radio2.pack(anchor=W)
+brush_type_radio3.pack(anchor=W)
 
 
 root.mainloop()
