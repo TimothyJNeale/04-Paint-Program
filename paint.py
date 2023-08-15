@@ -20,4 +20,13 @@ my_canvas.create_line(x1, y1, x2, y2, fill="red")
 x1, y1, x2, y2 = 100, 0, 100, 300
 my_canvas.create_line(x1, y1, x2, y2, fill="red")
 
+
+def paint(e):
+    # Create a red line following the mouse pointer
+    my_canvas.create_line(e.x, e.y, e.x+1, e.y+1, fill="red")
+    
+# Bind the mouse to the Canvas
+my_canvas.bind("<B1-Motion>", paint)
+
+
 root.mainloop()
