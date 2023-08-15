@@ -3,6 +3,7 @@ import tkinter.ttk as ttk
 from tkinter import colorchooser
 from tkinter import filedialog
 from PIL import ImageGrab, Image, ImageDraw, ImageTk
+from tkinter import messagebox
 
 root = Tk()
 root.title("Paint")
@@ -57,7 +58,8 @@ def save_as_png():
         y1 = y + my_canvas.winfo_height()
         ImageGrab.grab().crop((x, y, x1, y1)).save(result)
 
-
+        # Pop up success message
+        messagebox.showinfo("Image Saved", "Your image has been saved!")
 
 # Create Canvas
 my_canvas = Canvas(root, width=WIDTH, height=HEIGHT, bg="white")
